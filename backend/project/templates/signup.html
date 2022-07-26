@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sb-sidenav-footer">
+    {% if current_user.is_authenticated %}
+    Welcome back! {{ user_name}}
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+    Guest
+    {% endif %}
+</div>
+</nav>
+</div>
+<div id="layoutAuthentication" class="bg-primary row justify-content-center container-fluid px-4">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">Create Account</h3>
+                            </div>
+                            <div class="card-body">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                <div class="notification is-danger">
+                                    {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+
+                                <form id="signupForm" method="POST" action="/singup">
+
+                                    <div class="form-floating mb-3">
+                                        <div class="control">
+                                            <input class="form-control" type="email" name="email" placeholder="Email" autofocus="" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <div class="control">
+                                            <input class="form-control" type="text" name="name" placeholder="Name" autofocus="" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <div class="control">
+                                            <input class="form-control" type="password" name="password" placeholder="Password" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <div class="control">
+                                                    <input type="radio" id="student" name="user_type" value="Student">
+                                                    <label for="student">Student</label><br>
+                                                    <input type="radio" id="teacher" name="user_type" value="Teacher">
+                                                    <label for="teacher">Teacher</label><br>
+                                                    <!-- 
+                                                    <input type="radio" id="admin" name="user_type" value="Admin">
+                                                    <label for="admin">Admin</label><br> 
+                                                    -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <button id="signupButton" class="btn btn-primary"
+                                            style="background-color:gray;">Sign Up</button>
+
+                                        <img src="https://www.tennispro.es/skin/frontend/base/default/images/gomage/loadinfo.gif"
+                                            id="loading" style="width: 100px; height: 100px; display:none;" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a href="/login">Have an account? Go to login</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+</div>
+</div>
+<script>
+    // bind the form submit event to our function
+    $("#signupForm").bind('submit', function (e) {
+        // prevent page refresh
+        e.preventDefault();
+        // post the data
+        var formData = {};
+        formData.email = $('input[name="email"]').val();
+        formData.name = $('input[name="name"]').val();
+        formData.password = $('input[name="password"]').val();
+        formData.user_type = $('input[name="user_type"]:checked').val();
+
+        var ajax = $.ajax({
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
+            url: "ajax_signup",
+            beforeSend: function () {
+                $('#loading').show();
+                $('#signupButton').hide();
+            },
+            complete: function () {
+                $('#loading').hide();
+                $('#signupButton').show();
+            },
+            success: function (responseJson) {
+                alert('Success: ' + responseJson.message);
+                location.href = "/login"
+            },
+            error: function (response) {
+                let json = response.responseJSON;
+                alert('Error: ' + json.message);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

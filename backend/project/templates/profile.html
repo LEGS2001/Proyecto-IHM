@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sb-sidenav-footer">
+  {% if current_user.is_authenticated %}
+  Welcome back! {{ user_name}}
+  {% endif %}
+  {% if not current_user.is_authenticated %}
+  Guest
+  {% endif %}
+</div>
+</nav>
+</div>
+<div id="layoutSidenav_content">
+  <main>
+    <h1 class="title">
+      Welcome, {{ user_name }}
+    </h1>
+    <h2>
+      PRUEBA: Probando que funciona el Login
+    </h2>
+    <a href="/" class="btn btn-primary" style="background-color:gray;"> Go Home </a>
+    <br>
+    <a href="/admin" class="btn btn-primary" style="background-color:gray;"> CRUD (ADMIN) </a>
+    <a href="/teacher" class="btn btn-primary" style="background-color:gray;"> CRUD (TEACHER) </a>
+    <a href="/student" class="btn btn-primary" style="background-color:gray;"> CRUD (STUDENT) </a>
+  </main>
+</div>
+{% endblock %}

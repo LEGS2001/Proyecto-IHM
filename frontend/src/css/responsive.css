@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  #logo {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    margin-right: 5px;
+    float: left;
+  }
+
+  #logopic {
+    width: 100px;
+    height: 100px;
+  }
+
+  #adpic{
+    width: 250px;
+    height: 250px;
+  }
+
+  #ad {
+    width: 25%; 
+    float: left;
+  }
+
+  #navbarMenuHeroA{
+    width: 20%;
+    float: left;
+  }
+
+  #navbarMenuHeroB{
+    width: 20%;
+    float: right;
+  }
+
+  .navbar-item {
+    background-color: rgb(63, 63, 63);
+    color: rgb(185, 185, 185);
+    font-size: 150%;
+    margin-right: 5px;
+    margin-top: 35px;
+    padding: 10px;
+    float: left;
+  }
+  
+  #description {
+    padding: 3px;
+    width: 75%;
+    float: left;
+  }
+  
+  #description_container {
+    margin-top: 150px;
+  }
+  @media only screen and (max-width: 474px) {
+    /* For mobile phones: */
+    #logo, #ad  {
+      width: 100%;
+      text-align: center;
+    }
+    #logopic, #adpic {
+      width: 250px;
+      height: 250px;
+    }
+    #navbarMenuHeroA, #navbarMenuHeroB {
+      width: 100%;
+    }
+    #description_container {
+      margin-top: 700px;
+    }
+    #description, .navbar-item{
+      margin-left: 40px;
+      margin-right: 40px;
+      width: 85%;
+    }
+    
+  }
+  @media only screen and (min-width: 475px) and (max-width: 890px) {
+    /* For mobile phones: */
+    #logo, #ad  {
+      width: 100%;
+      text-align: center;
+    }
+    #logopic, #adpic {
+      width: 250px;
+      height: 250px;
+    }
+    #navbarMenuHeroA, #navbarMenuHeroB {
+      width: 100%;
+    }
+    #description_container {
+      margin-top: 700px;
+    }
+    #description, .navbar-item{
+      margin-left: 40px;
+      margin-right: 40px;
+      width: 88%;
+    }
+    
+  }
+  @media only screen and (min-width: 890px) {
+    #logo {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+    #description_container {
+      padding: 20px;
+    }
+    #navbarMenuHeroA, #navbarMenuHeroB {
+      width: 22%;
+    }
+  }
+  @media only screen and (min-width: 1090px) {
+    #navbarMenuHeroA, #navbarMenuHeroB {
+      width: 22%;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) and (min-height: 1366px) {
+    #logo, #ad  {
+      width: 100%;
+      text-align: center;
+    }
+    #logopic, #adpic{
+      width: 350px;
+      height: 350px;
+    }
+    #adpic{
+      width: 500px;
+      height: 500px;
+    }
+    #navbarMenuHeroA, #navbarMenuHeroB {
+      width: 100%;
+    }
+    #description_container {
+      margin-top: 700px;
+    }
+    #description, .navbar-item{
+      margin-left: 40px;
+      margin-right: 40px;
+      width: 88%;
+    }
+    .title {
+      font-size: 300%;
+    }
+    .subtitle {
+      font-size: 250%;
+    }
+    .navbar-item {
+      font-size: 200%;
+    }
+  }

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sb-sidenav-footer">
+    {% if current_user.is_authenticated %}
+    Welcome back! {{ user_name}}
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+    Guest
+    {% endif %}
+</div>
+</nav>
+</div>
+
+<div id="layoutAuthentication" class="bg-primary row justify-content-center container-fluid px-4">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5" style="width: 160%;">
+                            {% if current_user.user_type == "Admin" %}
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">CRUD - Admin</h3>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    Users Database
+                                </div>
+
+                                <div class="card-body">
+
+                                    <table class="table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>User Type</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody class="table-light table-striped table-hover">
+                                            {% for row in table_user %}
+                                            <tr>
+                                                <th> {{ row[1] }}</th>
+                                                <th> {{ row[3] }}</th>
+                                                <th> {{ row[2] }} </th>
+                                                <th>
+                                                    <div style="display: flex;">
+                                                        <form method="POST" action="/admin-update-user-getid">
+
+                                                            <input type="hidden" name="userid" value="{{ row[0] }}" />
+                                                            <button href="/admin-update-user" class="btn btn-primary" style="background-color:gray;">l</button>
+
+                                                        </form>
+
+                                                        <form method="POST" action="/admin-delete-user">
+
+                                                            <input type="hidden" name="userid" value="{{ row[0] }}" />
+                                                            <button class="btn btn-primary" style="background-color:gray;">x</button>
+
+                                                        </form>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        Course Database
+                                    </div>
+
+                                    <table class="table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Course</th>
+                                                <th>Teacher</th>
+                                                <th>Entry Key</th>
+                                                <th>Students</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody class="table-light table-striped table-hover">
+                                            {% for row in table_course %}
+                                            <tr>
+                                                <th> {{ row[1] }}</th>
+                                                <th> {{ row[4] }}</th>
+                                                <th> {{ row[2] }}</th>
+                                                <th>
+                                                    {% for row2 in table_student %}
+                                                    {% if row2[3] == row[0] %}
+                                                    {{ row2[2] }}.
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </th>
+                                                <th>
+                                                    <div style="display: flex;">
+                                                        <form method="POST" action="/admin-update-course-getid">
+
+                                                            <input type="hidden" name="courseid" value="{{ row[0] }}" />
+                                                            <button href="/admin-update-course" class="btn btn-primary" style="background-color:gray;">l</button>
+
+                                                        </form>
+
+                                                        <form method="POST" action="/admin-delete-course">
+
+                                                            <input type="hidden" name="courseid" value="{{ row[0] }}" />
+                                                            <button class="btn btn-primary" style="background-color:gray;">x</button>
+
+                                                        </form>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        Reading Database
+                                    </div>
+
+                                    <table class="table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Reading</th>
+                                                <th>Text</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody class="table-light table-striped table-hover">
+                                            {% for row in table_reading %}
+                                            <tr>
+                                                <th> {{ row[1] }}</th>
+                                                <th> {{ row[3] }} </th>
+                                                <th>
+                                                    <div style="display: flex;">
+                                                        <form method="POST" action="/admin-update-reading-getid">
+
+                                                            <input type="hidden" name="readingid" value="{{ row[0] }}" />
+                                                            <button href="/admin-update-reading" class="btn btn-primary" style="background-color:gray;">l</button>
+
+                                                        </form>
+
+                                                        <form method="POST" action="/admin-delete-reading">
+
+                                                            <input type="hidden" name="readingid" value="{{ row[0] }}" />
+                                                            <button class="btn btn-primary" style="background-color:gray;">x</button>
+
+                                                        </form>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if current_user.user_type != "Admin" %}
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">You're not supposed to be here...</h3>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header" style="text-align: center;">
+                                    <a href="/profile"> Go back</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+{% endblock %}

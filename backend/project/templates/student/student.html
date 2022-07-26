@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sb-sidenav-footer">
+    {% if current_user.is_authenticated %}
+    Welcome back! {{ user_name}}
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+    Guest
+    {% endif %}
+</div>
+</nav>
+</div>
+
+<div id="layoutAuthentication" class="bg-primary row justify-content-center container-fluid px-4">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5" style="width: 150%;">
+                            {% if current_user.user_type == "Student" %}
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">CRUD - Student</h3>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="text-center font-weight-light my-4">Join Course</h3>
+                                </div>
+    
+                                <div class="card-header"> Please enter the course's entry key </div>
+    
+                                <div class="card-body">
+                                    <form method="POST" id="joinCourse" action="/student">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputKey" type="text" name="key" placeholder="Entry Key" />
+                                                    <label for="inputKey">Entry Key</label>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="mt-4 mb-0">
+                                            <div class="d-grid"><button id="joinCourseButton" class="btn btn-primary btn-block">Join Course</button>
+                                                <img src="https://www.tennispro.es/skin/frontend/base/default/images/gomage/loadinfo.gif"
+                                                id="loading" style="width: 100px; height: 100px; display:none;" /></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if current_user.user_type != "Student" %}
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">You're not supposed to be here...</h3>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header" style="text-align: center;">
+                                    <a href="/profile"> Go back</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+</div>
+
+<script>
+    // bind the form submit event to our function
+    $("#joinCourse").bind('submit', function (e) {
+        // prevent page refresh
+        e.preventDefault();
+        // post the data
+        var formData = {};
+        formData.key = $('input[name="key"]').val();
+
+        var ajax = $.ajax({
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
+            url: "student",
+            beforeSend: function () {
+                $('#loading').show();
+                $('#joinCourseButton').hide();
+            },
+            complete: function () {
+                $('#loading').hide();
+                $('#joinCourseButton').show();
+            },
+            success: function (responseJson) {
+                alert('Success: ' + responseJson.message);
+                location.href = "/profile"
+            },
+            error: function (response) {
+                let json = response.responseJSON;
+                alert('Error: ' + json.message);
+            }
+        });
+    });
+</script>
+{% endblock %}
