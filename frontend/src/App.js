@@ -1,34 +1,31 @@
-import React, { useState, useMemo } from "react";
-import './css/App.css';
-import Base from "./pages/Base";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Base from "./pages/Base";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import { UserContext } from "./utils/UserContext";
 import Index from "./pages/Index";
+import Profile from "./pages/Profile"
+import WebcamComponent from "./Components/WebcamComponent";
+
+import './css/App.css';
+
+
 
 function App() {
 
-  const [user, setUser] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-
   return (
     <div className="App">
-      <UserContext.Provider value={value}>
-        <BrowserRouter>
+      <BrowserRouter>
           <Base />
           <Routes>
             <Route path='/' element={<Index />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/webcam' element={<WebcamComponent />} />
           </Routes>
-        </BrowserRouter>
-      </UserContext.Provider>
-
-
-
-
-
+      </BrowserRouter>
     </div>
   );
 }

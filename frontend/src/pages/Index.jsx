@@ -1,9 +1,7 @@
-import React, { useContext } from "react"
-import { UserContext } from "../utils/UserContext"
+import React from "react"
+
 
 const Index = () => {
-
-    /* const { user } = useContext(UserContext) */
 
     return (
     <div id="layoutSidenav_content">

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "../utils/UserContext";
+import React, { useState, useEffect } from "react";
+import httpClient from "../utils/httpClient";
 
 // importación de los íconos
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,11 +7,35 @@ import { faTachometerAlt, faColumns, faSearch, faBars, faUser, faAngleDown, faBo
 
 
 
+
 const Base = () => {
 
     // variable para mostrar sidebar
     const [mostrar, setMostrar] = useState(true);
-    const { user, setUser } = useContext(UserContext)
+
+    const logoutUsuario = async () => {
+        try {
+            await httpClient.post("//localhost:5000/react_logout");
+            window.location.href = "/"
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("//localhost:5000/@me");
+                setUser(resp.data);
+            } catch (error) {
+                console.log(error.message);
+                console.log("Usuario no autorizado")
+            }
+        })();
+    }, []);
+
+
 
     return (
         <body className="sb-nav-fixed">
@@ -41,10 +64,10 @@ const Base = () => {
                             {(user != null) ? (
                                 <div>
                                     <li><a className="dropdown-item" href="/profile">Profile</a></li>
-                                    <li><a className="dropdown-item" href="/logout">Log Out</a></li>
+                                    <li><a className="dropdown-item" onClick={logoutUsuario} /*href="/logout"*/ >Log Out</a></li>
                                 </div>) : (
                                 <div>
-                                    <li><a className="dropdown-item" href="/login">Login</a></li>
+                                    <li><a className="dropdown-item"  href="/login">Login</a></li>
                                     <li><a className="dropdown-item" href="/signup">Register</a></li>
                                 </div>)}
 

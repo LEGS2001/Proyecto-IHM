@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { useContext } from "react";
 import httpClient from "../utils/httpClient";
-import { UserContext } from "../utils/UserContext";
 
 const Signup = () => {
-
-    const {user, setUser} = useContext(UserContext)
 
     const [data, setData] = useState({
         email: "",
@@ -33,7 +29,8 @@ const Signup = () => {
 
         try{
             const resp = await httpClient.post("http://localhost:5000/ajax_signup", userData)
-            setUser(resp.data)
+            alert(resp.data.message)
+            window.location.href = "/login"
         }catch(error){
             alert(error.response.data.message)
         }

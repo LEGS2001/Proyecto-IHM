@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import httpClient from "../utils/httpClient";
-import { UserContext } from "../utils/UserContext";
 
 const Login = () => {
-
-    const { user, setUser } = useContext(UserContext)
 
     const [data, setData] = useState({
         email: "",
@@ -28,7 +25,8 @@ const Login = () => {
 
         try {
             const resp = await httpClient.post("http://localhost:5000/ajax_login", userData)
-            setUser(resp.data)
+            alert(resp.data.message) 
+            window.location.href = "/"
         } catch (error) {
             alert(error.response.data.message)
         }

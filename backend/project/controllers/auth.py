@@ -5,8 +5,26 @@ from ..models.User import User
 from project import db 
 import time, sqlite3, re
 from flask_cors import CORS, cross_origin
+from flask_session import Session
+
 auth = Blueprint('auth', __name__)
 CORS(auth, supports_credentials=True)
+
+@auth.route('/@me')
+def get_current_user():
+
+    if "user_id" not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    user_id = session["user_id"]
+    user = User.query.filter_by(id=user_id).first()
+
+    return jsonify({
+        "id": user.id,
+        "user_type": user.user_type,
+        "email": user.email,
+        "name": user.name
+    })
 
 @auth.route('/login')
 def login():
@@ -33,16 +51,13 @@ def ajax_login():
     
     login_user(user, remember=remember) 
 
+    session["user_id"] = user.id
+
     response = jsonify(responseMessage)
     response.status_code = responseStatusCode
 
-    #return(response) 
-    return jsonify({
-        "id": user.id,
-        "user_type": user.user_type,
-        "email": user.email,
-        "name": user.name
-    })
+    return(response) 
+
 
 
 @auth.route('/signup')
@@ -108,13 +123,12 @@ def ajax_signup_post():
     response = jsonify(responseMessage)
     response.status_code = responseStatusCode
 
-    #return response
-    return jsonify({
-        "id": user.id,
-        "user_type": user.user_type,
-        "email": user.email,
-        "name": user.name
-    })
+    return response
+
+@auth.route('/react_logout', methods=["POST"])
+def react_logout():
+    session.pop("user_id", None)
+    return "200"
 
 @auth.route('/logout')
 @login_required
