@@ -9,7 +9,6 @@ import Profile from "./pages/Profile"
 import Cam from "./pages/Cam";
 
 
-
 import './css/App.css';
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/webcam' element={<Cam />} />
+            {<Route path='/webcam' element={<Cam />} />}
           </Routes>
       </BrowserRouter>
     </div>

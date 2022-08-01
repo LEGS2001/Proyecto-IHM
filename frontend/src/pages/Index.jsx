@@ -1,6 +1,5 @@
 import React from "react"
 
-
 const Index = () => {
 
     return (
@@ -12,7 +11,6 @@ const Index = () => {
                     <h1 className="title">
                         App for Reading Material
                     </h1>
-                    
                     <h3 className="subtitle">
                         This is a prototype for the project codenamed "App for reading material" developed by Pedro Vidal and Nicolás Cevallos.
                         The app allows users to create student/teacher accounts to create or join courses in which reading material can be seen,

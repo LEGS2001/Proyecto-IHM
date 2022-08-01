@@ -16,7 +16,7 @@ function Cam() {
 
   navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: true
+    video: { width: 640, height: 480 }
   })
     .then(function (stream) {
       const audioContext = new AudioContext();
@@ -80,7 +80,7 @@ function Cam() {
       // NEW MODEL
       const faces = await net1.estimateFaces({ input: video });
       const objects = await net2.detect(video);
-      
+
       if (faces.length > 0) {
         faces.forEach(element => {
           console.log(element)
@@ -98,8 +98,6 @@ function Cam() {
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
       requestAnimationFrame(() => { drawMesh(faces, ctx); drawRect(objects, ctx); });
-    }else{
-      console.log(webcamRef.readyState)
     }
   };
 
@@ -110,8 +108,8 @@ function Cam() {
 
   return (
     <div className="App">
-
-        <Webcam
+      <header className="App-header">
+      <Webcam
           ref={webcamRef}
           style={{
             position: "absolute",
@@ -124,7 +122,7 @@ function Cam() {
             width: 640,
             height: 480,
           }}
-        ></Webcam>
+        />
 
         <canvas
           ref={canvasRef}
@@ -140,6 +138,7 @@ function Cam() {
             height: 480,
           }}
         />
+      </header>
 
     </div>
   );
