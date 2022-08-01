@@ -5,9 +5,6 @@ import httpClient from "../utils/httpClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTachometerAlt, faColumns, faSearch, faBars, faUser, faAngleDown, faBookOpen, faChartArea, faTable } from '@fortawesome/free-solid-svg-icons';
 
-
-
-
 const Base = () => {
 
     // variable para mostrar sidebar

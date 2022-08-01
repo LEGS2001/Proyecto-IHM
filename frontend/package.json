@@ -7,6 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@tensorflow-models/coco-ssd": "^2.2.2",
+    "@tensorflow-models/face-detection": "^1.0.1",
     "@tensorflow-models/face-landmarks-detection": "^0.0.2",
     "@tensorflow/tfjs": "^2.8.6",
     "@testing-library/jest-dom": "^5.16.4",
@@ -22,7 +23,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "react-webcam": "^5.2.0",
+    "react-webcam": "^5.2.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

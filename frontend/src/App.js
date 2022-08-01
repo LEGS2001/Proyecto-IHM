@@ -6,11 +6,11 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Profile from "./pages/Profile"
-import WebcamComponent from "./Components/WebcamComponent";
+import Cam from "./pages/Cam";
+
+
 
 import './css/App.css';
-
-
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/webcam' element={<WebcamComponent />} />
+            <Route path='/webcam' element={<Cam />} />
           </Routes>
       </BrowserRouter>
     </div>
