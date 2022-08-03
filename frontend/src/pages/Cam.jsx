@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 
 // NEW MODEL
@@ -13,6 +13,7 @@ import '../css/App.css';
 function Cam() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [alertaAudio, setAlertaAudio] = useState("Good")
 
   navigator.mediaDevices.getUserMedia({
     audio: true,
@@ -36,7 +37,14 @@ function Cam() {
         const arraySum = array.reduce((a, value) => a + value, 0);
         const average = arraySum / array.length;
         const audio = Math.round(average);
-        console.log(audio)
+        if (audio < 30){
+          setAlertaAudio("Good");
+        }else if(audio < 50){
+          setAlertaAudio("Warning")
+        }else{
+          setAlertaAudio("Error")
+        }
+
       };
     })
     .catch(function (err) {
@@ -108,6 +116,13 @@ function Cam() {
 
   return (
     <div className="App">
+
+    {(alertaAudio=="Good")
+    ?<div style={{backgroundColor: 'green'}}>No hay ruido</div>:
+    (alertaAudio=="Warning") ?
+    <div style={{backgroundColor: 'yellow'}}>Se detecta ruido de fondo</div>:
+    <div style={{backgroundColor: 'red'}}>Hay mucho ruido</div>}
+
       <header className="App-header">
       <Webcam
           ref={webcamRef}
@@ -139,7 +154,6 @@ function Cam() {
           }}
         />
       </header>
-
     </div>
   );
 }
