@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Profile from "./pages/Profile"
 import Cam from "./pages/Cam";
-
+import Admin from "./pages/Admin";
 
 import './css/App.css';
 
@@ -22,7 +22,8 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
-            {<Route path='/webcam' element={<Cam />} />}
+            <Route path='/webcam' element={<Cam />} />
+            <Route path='/admin' element={<Admin />} />
           </Routes>
       </BrowserRouter>
     </div>

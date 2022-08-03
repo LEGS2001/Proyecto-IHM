@@ -6,10 +6,13 @@ from ..models.Course import Course
 from ..models.Reading import Reading
 from ..models.StudentList import StudentList
 from project import db 
+from flask_cors import CORS, cross_origin
 import sqlite3, random, string
 admin = Blueprint('admin', __name__)
 
-@admin.route('/admin')
+CORS(admin, supports_credentials=True)
+
+@admin.route('/admin', methods=['GET'])
 @login_required
 def admin_crud():
     c = sqlite3.connect('project/db.sqlite')
@@ -22,7 +25,8 @@ def admin_crud():
     table_reading = cur.fetchall()
     cur.execute(f"SELECT * from Student_List")
     table_student = cur.fetchall()
-    return render_template('admin/admin.html', table_user = table_user, table_course=table_course, table_reading=table_reading, table_student=table_student, user_name=current_user.name)
+    return jsonify(table_user)
+    #return render_template('admin/admin.html', table_user = table_user, table_course=table_course, table_reading=table_reading, table_student=table_student, user_name=current_user.name)
 
 ###################################################################################################
 #                                Admin-User                                                       #
