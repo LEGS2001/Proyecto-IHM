@@ -7,6 +7,9 @@ import * as serviceWorker from './serviceWorker';
 
 
 import "bootstrap"
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import "./css/styles.css";
 import "./css/responsive.css";

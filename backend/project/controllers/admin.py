@@ -25,7 +25,7 @@ def admin_crud():
     table_reading = cur.fetchall()
     cur.execute(f"SELECT * from Student_List")
     table_student = cur.fetchall()
-    return jsonify(table_user)
+    return jsonify(table_user, table_course, table_reading, table_student)
     #return render_template('admin/admin.html', table_user = table_user, table_course=table_course, table_reading=table_reading, table_student=table_student, user_name=current_user.name)
 
 ###################################################################################################

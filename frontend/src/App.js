@@ -9,7 +9,15 @@ import Profile from "./pages/Profile"
 import Cam from "./pages/Cam";
 import Admin from "./pages/Admin";
 
+
+
 import './css/App.css';
+import "./css/styles.css";
+import "./css/responsive.css";
+import "./css/bulma.min.css";
+
+
+
 
 function App() {
 

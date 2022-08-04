@@ -14,6 +14,12 @@ function Cam() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [alertaAudio, setAlertaAudio] = useState("Good")
+  const [alertaCaras, setAlertaCaras] = useState(0)
+  const [alertaObjetos, setAlertaObjetos] = useState(0)
+
+  var contadorCaras = 0;
+  var contadorObjetos = 0;
+  var hayObjetos = false;
 
   navigator.mediaDevices.getUserMedia({
     audio: true,
@@ -89,20 +95,37 @@ function Cam() {
       const faces = await net1.estimateFaces({ input: video });
       const objects = await net2.detect(video);
 
-      if (faces.length > 0) {
-        faces.forEach(element => {
-          console.log(element)
-        });
+      if (faces.length <= 0) {
+        contadorCaras++;
+        if (contadorCaras >= 50){
+          setAlertaCaras(0)
+        }
+      }else if(faces.length == 1){
+        setAlertaCaras(1)
+        contadorCaras = 0;
+      }else{
+        setAlertaCaras(2)
+        contadorCaras = 0;
       }
 
       if (objects.length > 0) {
         objects.forEach(element => {
-          if (element.class == "cell phone") {
-            console.log(element)
+          if (element.class == "cell phone" || element.class == "book" || element.class == "remote") {
+            setAlertaObjetos(1)
+            hayObjetos = true;
+          }else{
+            if (contadorObjetos > 30){
+              setAlertaObjetos(0)
+              hayObjetos = false;
+              contadorObjetos = 0;
+            }
           }
         });
       }
-
+      if (hayObjetos == true){
+        contadorObjetos++;
+      }
+      console.log(contadorObjetos)
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
       requestAnimationFrame(() => { drawMesh(faces, ctx); drawRect(objects, ctx); });
@@ -114,6 +137,8 @@ function Cam() {
     run()
   }, []);
 
+
+
   return (
     <div className="App">
 
@@ -122,6 +147,16 @@ function Cam() {
     (alertaAudio=="Warning") ?
     <div style={{backgroundColor: 'yellow'}}>Se detecta ruido de fondo</div>:
     <div style={{backgroundColor: 'red'}}>Hay mucho ruido</div>}
+
+    {(alertaCaras == 0)
+    ?<div style= {{backgroundColor: 'red'}}>No hay estudiantes</div>:
+    (alertaCaras == 1) ?
+    <div style={{backgroundColor: 'green'}}>Hay solo 1 estudiante</div>:
+    <div style={{backgroundColor: 'red'}}>Hay muchos estudiantes</div>}
+
+    {(alertaObjetos == 0)
+    ?<div style= {{backgroundColor: 'green'}}>No hay objetos prohibidos</div>:
+    <div style={{backgroundColor: 'red'}}>Hay objetos prohibidos</div>}
 
       <header className="App-header">
       <Webcam
